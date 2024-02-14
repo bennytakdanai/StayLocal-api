@@ -1,0 +1,105 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum TourType {
+  TREKING
+  FOOD
+  CRAFT
+  RELAXED
+  CULTURAL
+}
+
+model User {
+  id             Int       @id @default(autoincrement())
+  username       String    @unique
+  profilePicture String?   @map("profile_picture")
+  email          String    @unique
+  firstname      String
+  lastname       String
+  isGuide        Boolean
+  password       String
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+  tours          Tour[]
+  bookings       Booking[]
+  Post           Post[]
+
+  @@map("users")
+}
+
+model Tour {
+  id               Int       @id @default(autoincrement())
+  type             TourType
+  name             String
+  date             DateTime  @db.Date
+  duration         String
+  location         String
+  groupSize        Int       @map("group_size") 
+  tourProfileImage String    @map("tour_profile_image")
+  tourDetail       String    @map("tour_detail") @db.LongText
+  tourProgram      String    @map("tour_program") @db.LongText
+  price            Int
+  avgReviewScore   Int?
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt        DateTime? @map("deleted_at") @db.Timestamp(0)
+  guideId          Int       @map("guide_id")
+  user             User      @relation(fields: [guideId], references: [id])
+  bookings         Booking[]
+  footages         Footage[]
+  posts            Post[]
+
+  @@map("tours")
+}
+
+model Booking {
+  id             Int       @id @default(autoincrement())
+  numberOfPeople Int       @default(1) @map("number_of_people")
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamp(0)
+  tourId         Int       @map("tour_id")
+  tour           Tour      @relation(fields: [tourId], references: [id])
+  clientId       Int       @map("client_id")
+  user           User      @relation(fields: [clientId], references: [id])
+
+  @@map("bookings")
+}
+
+model Footage {
+  id          Int       @id @default(autoincrement())
+  isVideo     Boolean
+  footageLink String    @map("footage_link")
+  tourId      Int       @map("tour_id")
+  tour        Tour      @relation(fields: [tourId], references: [id])
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt   DateTime? @map("deleted_at") @db.Timestamp(0)
+
+  @@map("footages")
+}
+
+model Post {
+  id          Int       @id @default(autoincrement())
+  postDetail  String?   @map("post_detail") @db.LongText
+  postPicture String?   @map("post_picture")
+  score       Int
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+  deletedAt   DateTime? @map("deleted_at") @db.Timestamp(0)
+  tourId      Int       @map("tour_id")
+  tour        Tour      @relation(fields: [tourId], references: [id])
+  clientId    Int       @map("client_id")
+  user        User      @relation(fields: [clientId], references: [id])
+
+  @@map("posts")
+}
