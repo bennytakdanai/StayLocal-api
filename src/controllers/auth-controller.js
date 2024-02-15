@@ -18,9 +18,9 @@ exports.register = catchError( async(req,res,next) =>{
 
     const payload = {id:newUser.id}
     delete newUser.password
-    const accessToken = jwtService.sign(payload)
+    const token = jwtService.sign(payload)
         
-    res.status(201).json({accessToken,newUser})
+    res.status(201).json({token,newUser})
     })
 
 exports.login = catchError( async(req,res,next)=>{
@@ -30,8 +30,12 @@ exports.login = catchError( async(req,res,next)=>{
     }
     
     if( bcrypt.compare(req.body.password,loginUser.password)){
-        const accessToken = jwtService.sign({id:loginUser.id})
+        const token = jwtService.sign({id:loginUser.id})
         delete loginUser.password
-        res.status(200).json({accessToken,loginUser})
+        res.status(200).json({token,loginUser})
     }
+})
+
+exports.getMe = catchError(async(req,res,next)=>{
+    res.json({user : req.user})
 })

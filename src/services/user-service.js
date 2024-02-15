@@ -8,4 +8,10 @@ exports.findUserbyUsernameOrEmail = (username,email)=>{
     })
     )
 }
+exports.findUserbyId = (id)=>{
+    return (prisma.user.findFirst({
+        where: {id}
+    }))
+}
+
 exports.createUser = data => prisma.user.create({data})
