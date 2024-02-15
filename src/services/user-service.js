@@ -9,8 +9,8 @@ exports.findUserbyUsernameOrEmail = (username,email)=>{
     )
 }
 exports.findUserbyId = (id)=>{
-    return (prisma.user.findFirst({
-        where: {id}
+    return (prisma.user.findUnique({
+        where: {id:id}
     }))
 }
 

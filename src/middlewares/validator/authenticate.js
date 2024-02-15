@@ -4,7 +4,8 @@ const createError = require("../../utils/create-error");
 const userService = require('../../services/user-service')
 
 const authenticate = catchError(async (req,res,next)=>{
-    const authorization = req.header.authorization
+    const authorization = req.headers.authorization
+    
     if(!authorization){
         createError('unauthorize',401)
     }
@@ -16,9 +17,9 @@ const authenticate = catchError(async (req,res,next)=>{
         createError('unauthorize',401)
     }
 
-    const idFromToken = jwt.verify(token)
+    const {id} = jwt.verify(token)
 
-    const user = userService.findUserbyId(idFromToken)
+    const user = await userService.findUserbyId(id)
     if(!user){
         createError('no user',401)
     }
