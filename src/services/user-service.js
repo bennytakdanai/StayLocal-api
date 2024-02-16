@@ -10,7 +10,7 @@ exports.findUserbyUsernameOrEmail = (username,email)=>{
 }
 exports.findUserbyId = (id)=>{
     return (prisma.user.findUnique({
-        where: {id:id}
+        where: {id}
     }))
 }
 
