@@ -4,8 +4,8 @@ const tourController = require('../controllers/tour-controller')
 
 const router = express.Router()
 
-
-router.post('/',authenticate,tourController.createTour)
-router.get('/',authenticate,tourController.getGuideTour)
+router.get('/:tourId',tourController.getTourById)
+router.post('/guide',authenticate,tourController.createTour)
+router.get('/guide',authenticate,tourController.getGuideTour)
 
 module.exports = router

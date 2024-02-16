@@ -3,6 +3,10 @@ const prisma = require('../models/prisma')
 
 exports.createTour = data => prisma.tour.create({data})
 
+exports.getTourByTourId = id => prisma.tour.findFirst({
+    where:{id}
+})
+
 exports.getTourByGuideId = guideId => prisma.tour.findMany({
     where:{guideId}
 })
