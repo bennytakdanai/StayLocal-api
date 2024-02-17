@@ -20,13 +20,14 @@ exports.createTour = catchError (async(req,res,next)=>{
 
 exports.getTourById = catchError(async(req,res,next)=>{
     const {tourId : id} = req.params 
-    console.log(id)
+ 
     const tour = await tourService.getTourByTourId(+id)
     res.status(200).json({tour})
 })
 
 exports.getGuideTour = catchError(async(req,res,next)=>{
     const user = req.user
+    console.log(req.user)
     if (!user.isGuide){
         createError("only guide can get tour",401)
     }

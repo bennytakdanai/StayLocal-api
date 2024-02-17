@@ -8,7 +8,9 @@ exports.getTourByTourId = id => prisma.tour.findFirst({
 })
 
 exports.getTourByGuideId = guideId => prisma.tour.findMany({
-    where:{guideId}
+    where:{guideId},
+    orderBy:{date:'asc'}
+    
 })
 
 // exports.updateTourByTourId = (TourId,data)=> prisma.tour.update({
