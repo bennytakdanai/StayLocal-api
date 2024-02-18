@@ -15,3 +15,10 @@ exports.findUserbyId = (id)=>{
 }
 
 exports.createUser = data => prisma.user.create({data})
+
+exports.updateUserProfile = (data,id) => {
+    return( prisma.user.update({
+        data,
+        where:{id}
+    }))
+}

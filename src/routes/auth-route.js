@@ -11,4 +11,4 @@ router.post('/login',validateLogin,authController.login)
 router.get('/me',authenticate,authController.getMe)
 
 
-module.exports = router
+module.exports = router 
