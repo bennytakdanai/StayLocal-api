@@ -25,7 +25,7 @@ const authenticate = catchError(async (req,res,next)=>{
     }
     delete user.password
     req.user = user
-    console.log(user)
+    // console.log(user)
     next()
 
 

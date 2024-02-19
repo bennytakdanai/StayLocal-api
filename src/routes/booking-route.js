@@ -7,7 +7,8 @@ const authenticate = require('../middlewares/validator/authenticate')
 
 router.get('/',authenticate,bookingController.getClientBooking)
 router.post('/',authenticate,bookingController.createBooking)
-
+router.patch('/',authenticate,bookingController.editBooking)
+router.delete('/:bookingId',authenticate,bookingController.cancleBooking)
 
 
 
