@@ -1,6 +1,7 @@
 const catchError = require("../utils/catch-error");
 const createError = require("../utils/create-error");
 const tourService = require("../services/tour-service");
+const uploadService = require("../services/upload-service");
 const { json } = require("express");
 
 
@@ -10,10 +11,17 @@ exports.createTour = catchError (async(req,res,next)=>{
     if (!user.isGuide){
         createError("only guide can create tour",401)
     }
+    console.log(req.body.date)
+    const urlPicture = await uploadService.upload(req.file.path)
+
     req.body.guideId = user.id
+    req.body.groupSize = +req.body.groupSize
+    req.body.price = +req.body.price
     req.body.date = new Date(req.body.date)
+    req.body.tourProfileImage = urlPicture
     const tour = await tourService.createTour(req.body)
     res.status(200).json({tour})
+    // res.status(200).json({mes:'success'})
 
     
 })

@@ -6,6 +6,7 @@ const fs = require('fs/promises')
 
 exports.updateUserProfile = catchError(async(req,res,next)=>{
     console.log(req.file)
+    
     if(!req.file){
         createError('profile picture is required',400)
     }
