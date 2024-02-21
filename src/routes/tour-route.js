@@ -9,8 +9,9 @@ router.post('/guide',
     authenticate,
     upload.single('tourProfileImage'),
     tourController.createTour)
-    
+
 router.get('/guide',authenticate,tourController.getGuideTour)
 router.get('/:tourId',tourController.getTourById)
+router.delete('/guide/:tourId',authenticate,tourController.deleteTour)
 
 module.exports = router

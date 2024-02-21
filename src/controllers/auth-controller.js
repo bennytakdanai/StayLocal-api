@@ -24,6 +24,7 @@ exports.register = catchError( async(req,res,next) =>{
     })
 
 exports.login = catchError( async(req,res,next)=>{
+    console.log(req.body)
     const loginUser = await userService.findUserbyUsernameOrEmail(req.body.username)
     if(!loginUser){
         createError("username invalid",400)

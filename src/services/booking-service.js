@@ -12,6 +12,14 @@ const prisma = require("../models/prisma");
     }))
  }
 
+ exports.findSumNumberOfPeoplebyTourId = (tourId)=>{
+    return (prisma.booking.groupBy({
+        by:['tourId'],
+        _sum:{numberOfPeople:true},
+        where:{tourId}
+    }))
+ }
+
  exports.findBookingbyTourId = (tourId)=>{
     return(prisma.booking.findMany({
         where:{tourId}
