@@ -56,3 +56,41 @@ exports.deleteTour = catchError(async(req,res,next)=>{
     const deletedTour = await tourService.deleteTourByTourId(+req.params.tourId)
     res.status(200).json({deletedTour})
 })
+
+exports.getProvince = catchError(async(req,res,next)=>{
+    const locations = await tourService.getAllTourProvince()
+    const provinces = locations.reduce((acc,el)=>{
+        let province = (el.location).split(', ')[1]
+        if(acc.findIndex((p)=>p == province) ==-1){
+             acc.push(province)
+        }
+        return acc
+    } ,[])
+
+    res.status(200).json({provinces})
+})
+
+exports.getHomePageTour = catchError(async(req,res,next)=>{
+    const province = req.body.province||undefined
+    const date = req.body.date? new Date(req.body.date) : undefined
+    
+    const type = req.body.type||undefined
+    let pricemax
+    let pricemin
+    if(req.body.price =='0-1500'){
+        pricemin=0
+        pricemax=1501
+    }else if(req.body.price =='1500-3000'){
+        pricemin = 1500
+        pricemax = 3001
+    }else if(req.body.price =='3000-5000'){
+        pricemin = 3000
+        pricemax = 5001
+    }else if(req.body.price =='more than 5000'){
+        pricemin = 5000
+        pricemax = 100000
+        
+    }
+    const homePageTour = await tourService.getSearchedTour(province,date,pricemax,pricemin,type)
+    res.status(200).json({homePageTour})
+})

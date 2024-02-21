@@ -10,6 +10,8 @@ router.post('/guide',
     upload.single('tourProfileImage'),
     tourController.createTour)
 
+router.get('/province',tourController.getProvince)
+router.get('/homepage',tourController.getHomePageTour)
 router.get('/guide',authenticate,tourController.getGuideTour)
 router.get('/:tourId',tourController.getTourById)
 router.delete('/guide/:tourId',authenticate,tourController.deleteTour)
