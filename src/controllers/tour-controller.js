@@ -28,7 +28,7 @@ exports.createTour = catchError (async(req,res,next)=>{
 
 exports.getTourById = catchError(async(req,res,next)=>{
     const {tourId : id} = req.params 
- 
+    console.log(req.params)
     const tour = await tourService.getTourByTourId(+id)
     const sumPeople = await bookingService.findSumNumberOfPeoplebyTourId(+id)
     res.status(200).json({tour,sumPeople})
