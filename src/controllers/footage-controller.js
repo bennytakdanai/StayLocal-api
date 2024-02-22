@@ -4,7 +4,12 @@ const catchError = require("../utils/catch-error");
 const createError = require("../utils/create-error");
 const fs = require('fs/promises')
 
+exports.findFootageByTourId = catchError(async(req,res,next)=>{
+    const {tourId:tourId} = req.params
 
+    const footages = await footageService.getFootageByTourId(+tourId)
+    res.status(200).json({footages})
+})
 
 exports.createFootage = catchError(async(req,res,next)=>{
     const user = req.user

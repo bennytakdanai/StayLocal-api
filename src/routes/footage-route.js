@@ -10,7 +10,7 @@ router.post('/',
     upload.array('footageLink'),
     footageController.createFootage)
 
-
+router.get('/:tourId',footageController.findFootageByTourId)
 
 
 
