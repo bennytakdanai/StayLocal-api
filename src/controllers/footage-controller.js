@@ -12,11 +12,14 @@ exports.createFootage = catchError(async(req,res,next)=>{
         createError("only guide can add footage",401)
     }
 
+    console.log(req.files)
+    console.log(req.body)
+
     try{
         const createdFootageLink = []
         for(const el of req.files){
             const isVideo = (el.mimetype === 'video/mp4')
-            const tourId = 1
+            const tourId = +req.body.tourId
 
             let urlFootage 
             if(isVideo){
