@@ -11,7 +11,7 @@ router.post('/guide',
     tourController.createTour)
 
 router.get('/province',tourController.getProvince)
-router.get('/homepage',tourController.getHomePageTour)
+router.post('/homepage',tourController.getHomePageTour)
 router.get('/guide',authenticate,tourController.getGuideTour)
 router.get('/:tourId',tourController.getTourById)
 router.delete('/guide/:tourId',authenticate,tourController.deleteTour)

@@ -39,13 +39,9 @@ exports.getSearchedTour = (province,date,pricemax,pricemin,type) => prisma.tour.
                 {price:{lt:pricemax}}
             ]},
             {type:type}
-                
-            
-                
-                
-            
         ]
-    }
+    },
+    orderBy:{date:'asc'}
 })
 
 // exports.updateTourByTourId = (TourId,data)=> prisma.tour.update({

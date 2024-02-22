@@ -12,7 +12,6 @@ exports.createTour = catchError (async(req,res,next)=>{
     if (!user.isGuide){
         createError("only guide can create tour",401)
     }
-    console.log(req.body.date)
     const urlPicture = await uploadService.upload(req.file.path)
 
     req.body.guideId = user.id
@@ -20,11 +19,10 @@ exports.createTour = catchError (async(req,res,next)=>{
     req.body.price = +req.body.price
     req.body.date = new Date(req.body.date)
     req.body.tourProfileImage = urlPicture
+    console.log(req.body)
     const tour = await tourService.createTour(req.body)
     fs.unlink(req.file.path)
     res.status(200).json({tour})
-    // res.status(200).json({mes:'success'})
-
     
 })
 
@@ -71,7 +69,8 @@ exports.getProvince = catchError(async(req,res,next)=>{
 })
 
 exports.getHomePageTour = catchError(async(req,res,next)=>{
-    const province = req.body.province||undefined
+    console.log(req.body)
+    const province = req.body.location||undefined
     const date = req.body.date? new Date(req.body.date) : undefined
     
     const type = req.body.type||undefined
@@ -81,13 +80,13 @@ exports.getHomePageTour = catchError(async(req,res,next)=>{
         pricemin=0
         pricemax=1501
     }else if(req.body.price =='1500-3000'){
-        pricemin = 1500
+        pricemin = 1501
         pricemax = 3001
     }else if(req.body.price =='3000-5000'){
-        pricemin = 3000
+        pricemin = 3001
         pricemax = 5001
     }else if(req.body.price =='more than 5000'){
-        pricemin = 5000
+        pricemin = 5001
         pricemax = 100000
         
     }
