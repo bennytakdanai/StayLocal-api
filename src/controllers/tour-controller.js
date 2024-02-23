@@ -68,6 +68,17 @@ exports.getProvince = catchError(async(req,res,next)=>{
     res.status(200).json({provinces})
 })
 
+exports.editTour = catchError(async(req,res,next)=>{
+    const user = req.user
+    if (!user.isGuide){
+        createError("only guide can delete tour",401)
+    }
+    const {tourId : id} = req.params 
+    req.body.date = new Date(req.body.date)
+    const editedTour = await tourService.updateTourByTourId(+id,req.body)
+    res.status(200).json({editedTour})
+})
+
 exports.getHomePageTour = catchError(async(req,res,next)=>{
     console.log(req.body)
     const province = req.body.location||undefined

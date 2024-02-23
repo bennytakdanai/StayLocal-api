@@ -14,6 +14,7 @@ router.get('/province',tourController.getProvince)
 router.post('/homepage',tourController.getHomePageTour)
 router.get('/guide',authenticate,tourController.getGuideTour)
 router.get('/:tourId',tourController.getTourById)
+router.patch('/:tourId',authenticate,tourController.editTour)
 router.delete('/guide/:tourId',authenticate,tourController.deleteTour)
 
 module.exports = router

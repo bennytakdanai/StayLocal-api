@@ -44,7 +44,7 @@ exports.getSearchedTour = (province,date,pricemax,pricemin,type) => prisma.tour.
     orderBy:{date:'asc'}
 })
 
-// exports.updateTourByTourId = (TourId,data)=> prisma.tour.update({
-//     where:{id:TourId},
-//     data
-// })
+exports.updateTourByTourId = (tourId,data)=> prisma.tour.update({
+    where:{id:tourId},
+    data
+})
